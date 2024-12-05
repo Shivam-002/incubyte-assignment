@@ -36,4 +36,14 @@ describe("add_strings", () => {
   it("should return the sum of numbers separated by custom delimiters", () => {
     expect(add_strings("//;\n1;2")).toBe(3);
   });
+
+  it("should throw an error for negative numbers", () => {
+    expect(() => add_strings("-1")).toThrowError("Negatives not allowed: -1");
+  });
+
+  it("should throw an error for negative numbers", () => {
+    expect(() => add_strings("-1,-2")).toThrowError(
+      "Negatives not allowed: -1,-2"
+    );
+  });
 });
