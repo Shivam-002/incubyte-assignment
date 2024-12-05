@@ -32,6 +32,7 @@ const add_strings = (numbers: string): number => {
   let numberArray = numberString.split(regex);
   const negativeNumbers = numberArray.filter((num) => parseInt(num, 10) < 0);
 
+  numberArray = numberArray.filter((num) => num !== "");
   if (negativeNumbers.length > 0) {
     throw new Error(`Negatives not allowed: ${negativeNumbers.join(",")}`);
   }
