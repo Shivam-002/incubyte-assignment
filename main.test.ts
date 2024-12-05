@@ -32,4 +32,8 @@ describe("add_strings", () => {
   it("should return the sum of numbers separated by newlines", () => {
     expect(add_strings("1\n2\n3")).toBe(6);
   });
+
+  it("should return the sum of numbers separated by custom delimiters", () => {
+    expect(add_strings("//;\n1;2")).toBe(3);
+  });
 });
