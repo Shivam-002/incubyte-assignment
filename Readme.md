@@ -15,7 +15,7 @@ These instructions will help you set up and run the project.
 
 1. Clone the repository:
    ```bash
-   git clone <repository-url>
+   git clone incubyte-assignment
    ```
 2. Navigate to the project directory:
    ```bash
@@ -41,7 +41,7 @@ npx jest
 
 ## Authors
 
-- [Your Name](https://github.com/Shivam-002)
+- [Shivam Prajapati](https://github.com/Shivam-002)
 
 ## License
 
