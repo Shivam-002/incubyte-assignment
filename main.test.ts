@@ -62,4 +62,8 @@ describe("add_strings", () => {
   it("should allow multiple custom delimiters", () => {
     expect(add_strings("//[*][%]\n1*2%3")).toBe(6);
   });
+
+  it("should allow multiple custom delimiters of any length", () => {
+    expect(add_strings("//[***][%%%]\n1***2%%%3")).toBe(6);
+  });
 });
