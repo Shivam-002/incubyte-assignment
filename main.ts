@@ -10,12 +10,25 @@ const add_strings = (numbers: string): number => {
   // Check for  delimiter
   if (numbers.startsWith("//")) {
     const delimiterEndIndex = numbers.indexOf("\n");
-    const customDelimiter = numbers.substring(2, delimiterEndIndex);
-    delimiters.push(customDelimiter);
+    const customDelimiterSection = numbers.substring(2, delimiterEndIndex);
+    const customDelimiters = customDelimiterSection.match(/\[([^\]]+)\]/g);
+
+    if (customDelimiters) {
+      customDelimiters.forEach((delimiter) => {
+        delimiters.push(delimiter.slice(1, -1));
+      });
+    } else {
+      delimiters.push(customDelimiterSection);
+    }
+
     numberString = numbers.substring(delimiterEndIndex + 1);
   }
 
-  const regex = new RegExp(`[${delimiters.join("")}]`);
+  const regex = new RegExp(
+    `[${delimiters
+      .map((d) => d.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"))
+      .join("|")}]`
+  );
   let numberArray = numberString.split(regex);
   const negativeNumbers = numberArray.filter((num) => parseInt(num, 10) < 0);
 
