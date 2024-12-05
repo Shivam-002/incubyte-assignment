@@ -16,12 +16,15 @@ const add_strings = (numbers: string): number => {
   }
 
   const regex = new RegExp(`[${delimiters.join("")}]`);
-  const numberArray = numberString.split(regex);
+  let numberArray = numberString.split(regex);
   const negativeNumbers = numberArray.filter((num) => parseInt(num, 10) < 0);
 
   if (negativeNumbers.length > 0) {
     throw new Error(`Negatives not allowed: ${negativeNumbers.join(",")}`);
   }
+
+  const MAX_NUMBER = 1000;
+  numberArray = numberArray.filter((num) => parseInt(num, 10) <= MAX_NUMBER);
 
   return numberArray.reduce((acc, num) => acc + parseInt(num, 10), 0);
 };
