@@ -1,13 +1,9 @@
-const add_strings = (numbers: string): number => {
-  // If the string is empty, return 0
-  if (numbers === "") {
-    return 0;
-  }
-
+const parseDelimiters = (
+  numbers: string
+): { delimiters: string[]; numberString: string } => {
   let delimiters = [",", "\n"];
   let numberString = numbers;
 
-  // Check for  delimiter
   if (numbers.startsWith("//")) {
     const delimiterEndIndex = numbers.indexOf("\n");
     const customDelimiterSection = numbers.substring(2, delimiterEndIndex);
@@ -24,21 +20,44 @@ const add_strings = (numbers: string): number => {
     numberString = numbers.substring(delimiterEndIndex + 1);
   }
 
+  return { delimiters, numberString };
+};
+
+const splitNumbers = (numberString: string, delimiters: string[]): string[] => {
   const regex = new RegExp(
     `[${delimiters
       .map((d) => d.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"))
       .join("|")}]`
   );
-  let numberArray = numberString.split(regex);
-  const negativeNumbers = numberArray.filter((num) => parseInt(num, 10) < 0);
+  return numberString.split(regex).filter((num) => num !== "");
+};
 
-  numberArray = numberArray.filter((num) => num !== "");
+const filterNegativeNumbers = (numberArray: string[]): void => {
+  const negativeNumbers = numberArray.filter((num) => parseInt(num, 10) < 0);
   if (negativeNumbers.length > 0) {
     throw new Error(`Negatives not allowed: ${negativeNumbers.join(",")}`);
   }
+};
+
+const filterLargeNumbers = (
+  numberArray: string[],
+  maxNumber: number
+): string[] => {
+  return numberArray.filter((num) => parseInt(num, 10) <= maxNumber);
+};
+
+const add_strings = (numbers: string): number => {
+  if (numbers === "") {
+    return 0;
+  }
+
+  const { delimiters, numberString } = parseDelimiters(numbers);
+  let numberArray = splitNumbers(numberString, delimiters);
+
+  filterNegativeNumbers(numberArray);
 
   const MAX_NUMBER = 1000;
-  numberArray = numberArray.filter((num) => parseInt(num, 10) <= MAX_NUMBER);
+  numberArray = filterLargeNumbers(numberArray, MAX_NUMBER);
 
   return numberArray.reduce((acc, num) => acc + parseInt(num, 10), 0);
 };
