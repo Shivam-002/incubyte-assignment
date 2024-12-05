@@ -4,7 +4,9 @@ const add_strings = (numbers: string): number => {
     return 0;
   }
 
-  return numbers.split(",").reduce((acc, num) => acc + parseInt(num, 10), 0);
+  const delimiters = [",", "\n"];
+  const regex = new RegExp(`[${delimiters.join("")}]`);
+  return numbers.split(regex).reduce((acc, num) => acc + parseInt(num, 10), 0);
 };
 
 export { add_strings };
