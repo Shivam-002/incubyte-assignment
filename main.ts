@@ -4,9 +4,21 @@ const add_strings = (numbers: string): number => {
     return 0;
   }
 
-  const delimiters = [",", "\n"];
+  let delimiters = [",", "\n"];
+  let numberString = numbers;
+
+  // Check for  delimiter
+  if (numbers.startsWith("//")) {
+    const delimiterEndIndex = numbers.indexOf("\n");
+    const customDelimiter = numbers.substring(2, delimiterEndIndex);
+    delimiters.push(customDelimiter);
+    numberString = numbers.substring(delimiterEndIndex + 1);
+  }
+
   const regex = new RegExp(`[${delimiters.join("")}]`);
-  return numbers.split(regex).reduce((acc, num) => acc + parseInt(num, 10), 0);
+  return numberString
+    .split(regex)
+    .reduce((acc, num) => acc + parseInt(num, 10), 0);
 };
 
 export { add_strings };
