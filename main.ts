@@ -16,9 +16,14 @@ const add_strings = (numbers: string): number => {
   }
 
   const regex = new RegExp(`[${delimiters.join("")}]`);
-  return numberString
-    .split(regex)
-    .reduce((acc, num) => acc + parseInt(num, 10), 0);
+  const numberArray = numberString.split(regex);
+  const negativeNumbers = numberArray.filter((num) => parseInt(num, 10) < 0);
+
+  if (negativeNumbers.length > 0) {
+    throw new Error(`Negatives not allowed: ${negativeNumbers.join(",")}`);
+  }
+
+  return numberArray.reduce((acc, num) => acc + parseInt(num, 10), 0);
 };
 
 export { add_strings };
