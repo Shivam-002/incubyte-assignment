@@ -46,4 +46,12 @@ describe("add_strings", () => {
       "Negatives not allowed: -1,-2"
     );
   });
+
+  it("should ignore numbers greater than 1000", () => {
+    expect(add_strings("1001,2")).toBe(2);
+  });
+
+  it("should ignore numbers greater than 1000", () => {
+    expect(add_strings("1001,2,1002")).toBe(2);
+  });
 });
